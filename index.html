@@ -49,8 +49,14 @@
       },
     function(codigoEscaneado) {
 
+  if (procesando) {
+    return;
+  }
+
+  procesando = true;
+
   document.getElementById("resultado").textContent =
-    "Probando conexión...";
+    "⏳ Verificando boleto...";
 
   const url =
     URL_API +
