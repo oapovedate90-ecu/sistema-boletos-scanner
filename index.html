@@ -61,12 +61,14 @@
       return respuesta.text();
 
     })
-    .then(function(datos) {
+   .then(function(datos) {
 
-      document.getElementById("resultado").textContent =
-        "Respuesta: " + datos;
+  const resultado = JSON.parse(datos);
 
-    })
+  document.getElementById("resultado").textContent =
+    resultado.mensaje;
+
+})
     .catch(function(error) {
 
       document.getElementById("resultado").textContent =
