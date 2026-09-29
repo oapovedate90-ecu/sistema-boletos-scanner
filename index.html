@@ -12,6 +12,48 @@
 
   <title>Escáner de Boletos</title>
 
+  <style>
+
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+  }
+
+  #lector-qr {
+    max-width: 500px;
+    margin: 20px auto;
+  }
+
+  #resultado {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 25px;
+    border-radius: 15px;
+    font-size: 18px;
+    background: #eeeeee;
+  }
+
+  .exito {
+    background: #d4edda;
+    border: 3px solid #28a745;
+    color: #155724;
+  }
+
+  .error {
+    background: #f8d7da;
+    border: 3px solid #dc3545;
+    color: #721c24;
+  }
+
+  .esperando {
+    background: #eeeeee;
+    border: 3px solid #999999;
+    color: #333333;
+  }
+
+</style>
+
   <script src="https://unpkg.com/html5-qrcode"></script>
 
 </head>
@@ -26,9 +68,9 @@
 
   <div id="lector-qr"></div>
 
-  <p id="resultado">
+  <div id="resultado">
     Esperando QR...
-  </p>
+  </div>
 
   <script>
 
@@ -55,8 +97,10 @@
 
   procesando = true;
 
-  document.getElementById("resultado").textContent =
-    "⏳ Verificando boleto...";
+  document.getElementById("resultado").className = "esperando";
+
+document.getElementById("resultado").innerHTML =
+  "<h2>⏳ VERIFICANDO BOLETO...</h2>";
 
   const url =
     URL_API +
@@ -75,23 +119,49 @@
 
   if (resultado.ok) {
 
-    document.getElementById("resultado").innerHTML =
-      `
-      <strong>${resultado.mensaje}</strong><br><br>
-      Boleto: ${resultado.numero}<br>
-      Comprador: ${resultado.comprador}<br>
-      Fecha: ${resultado.fecha}<br>
-      Hora: ${resultado.hora}
-      `;
+    document.getElementById("resultado").className = "exito";
+
+document.getElementById("resultado").innerHTML =
+  `
+  <h2>✅ INGRESO REGISTRADO</h2>
+
+  <p>
+    <strong>Boleto:</strong> ${resultado.numero}
+  </p>
+
+  <p>
+    <strong>Comprador:</strong> ${resultado.comprador}
+  </p>
+
+  <p>
+    <strong>Fecha:</strong> ${resultado.fecha}
+  </p>
+
+  <p>
+    <strong>Hora:</strong> ${resultado.hora}
+  </p>
+  `;
 
   } else {
 
-    document.getElementById("resultado").innerHTML =
-      `
-      <strong>${resultado.mensaje}</strong><br><br>
-      ${resultado.numero ? "Boleto: " + resultado.numero + "<br>" : ""}
-      ${resultado.comprador ? "Comprador: " + resultado.comprador : ""}
-      `;
+    document.getElementById("resultado").className = "error";
+
+document.getElementById("resultado").innerHTML =
+  `
+  <h2>${resultado.mensaje}</h2>
+
+  ${
+    resultado.numero
+      ? "<p><strong>Boleto:</strong> " + resultado.numero + "</p>"
+      : ""
+  }
+
+  ${
+    resultado.comprador
+      ? "<p><strong>Comprador:</strong> " + resultado.comprador + "</p>"
+      : ""
+  }
+  `;
 
   }
 
