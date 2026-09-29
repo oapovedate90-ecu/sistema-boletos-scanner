@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>Escáner de Boletos</title>
+
+  <script src="https://unpkg.com/html5-qrcode"></script>
+
+</head>
+
+<body>
+
+  <h1>🎟️ Escáner de Boletos</h1>
+
+  <p>
+    Apunta la cámara hacia el código QR.
+  </p>
+
+  <div id="lector-qr"></div>
+
+  <p id="resultado">
+    Esperando QR...
+  </p>
+
+  <script>
+
+    const lector = new Html5Qrcode("lector-qr");
+
+    lector.start(
+      {
+        facingMode: "environment"
+      },
+      {
+        fps: 10,
+        qrbox: 250
+      },
+      function(codigoEscaneado) {
+
+        document.getElementById("resultado").textContent =
+          "QR detectado: " + codigoEscaneado;
+
+      },
+      function(error) {
+
+        // No mostramos los errores normales de lectura.
+
+      }
+    );
+
+  </script>
+
+</body>
+
+</html>
