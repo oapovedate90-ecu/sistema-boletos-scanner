@@ -37,6 +37,8 @@
 
     const lector = new Html5Qrcode("lector-qr");
 
+    let procesando = false;
+
     lector.start(
       {
         facingMode: "environment"
