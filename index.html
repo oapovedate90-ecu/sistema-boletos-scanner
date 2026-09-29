@@ -45,30 +45,25 @@
         fps: 10,
         qrbox: 250
       },
-      function(codigoEscaneado) {
-
-  document.getElementById("resultado").textContent =
-    "Enviando código...";
-
-  const url =
-    URL_API +
-    "?codigo=" +
-    encodeURIComponent(codigoEscaneado);
-
-  const ventana = window.open(url, "_blank");
-
-  if (!ventana) {
-
-    document.getElementById("resultado").textContent =
-      "❌ El navegador bloqueó la prueba";
-
-    return;
-  }
-
-  document.getElementById("resultado").textContent =
-    "✅ Código enviado: " + codigoEscaneado;
-
-},
+    function(codigoEscaneado) {
+    
+      document.getElementById("resultado").textContent =
+        "Código detectado: " + codigoEscaneado;
+    
+      const url =
+        URL_API +
+        "?codigo=" +
+        encodeURIComponent(codigoEscaneado);
+    
+      const imagen = document.createElement("img");
+    
+      imagen.src = url;
+    
+      imagen.style.display = "none";
+    
+      document.body.appendChild(imagen);
+    
+    },
       function(error) {
 
         // No mostramos los errores normales de lectura.
