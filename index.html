@@ -88,12 +88,14 @@
   }
 
 })
-    .catch(function(error) {
+  .catch(function(error) {
 
-      document.getElementById("resultado").textContent =
-        "❌ Error de conexión: " + error;
+  document.getElementById("resultado").textContent =
+    "❌ Error de conexión";
 
-    });
+  console.error(error);
+
+});
 
 },
       function(error) {
