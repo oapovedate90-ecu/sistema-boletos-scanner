@@ -47,10 +47,28 @@
       },
       function(codigoEscaneado) {
 
-        document.getElementById("resultado").textContent =
-          "QR detectado: " + codigoEscaneado;
+  document.getElementById("resultado").textContent =
+    "Enviando código...";
 
-      },
+  const url =
+    URL_API +
+    "?codigo=" +
+    encodeURIComponent(codigoEscaneado);
+
+  const ventana = window.open(url, "_blank");
+
+  if (!ventana) {
+
+    document.getElementById("resultado").textContent =
+      "❌ El navegador bloqueó la prueba";
+
+    return;
+  }
+
+  document.getElementById("resultado").textContent =
+    "✅ Código enviado: " + codigoEscaneado;
+
+},
       function(error) {
 
         // No mostramos los errores normales de lectura.
