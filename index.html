@@ -65,8 +65,27 @@
 
   const resultado = JSON.parse(datos);
 
-  document.getElementById("resultado").textContent =
-    resultado.mensaje;
+  if (resultado.ok) {
+
+    document.getElementById("resultado").innerHTML =
+      `
+      <strong>${resultado.mensaje}</strong><br><br>
+      Boleto: ${resultado.numero}<br>
+      Comprador: ${resultado.comprador}<br>
+      Fecha: ${resultado.fecha}<br>
+      Hora: ${resultado.hora}
+      `;
+
+  } else {
+
+    document.getElementById("resultado").innerHTML =
+      `
+      <strong>${resultado.mensaje}</strong><br><br>
+      ${resultado.numero ? "Boleto: " + resultado.numero + "<br>" : ""}
+      ${resultado.comprador ? "Comprador: " + resultado.comprador : ""}
+      `;
+
+  }
 
 })
     .catch(function(error) {
