@@ -46,24 +46,35 @@
         qrbox: 250
       },
     function(codigoEscaneado) {
-    
+
+  document.getElementById("resultado").textContent =
+    "Probando conexión...";
+
+  const url =
+    URL_API +
+    "?codigo=" +
+    encodeURIComponent(codigoEscaneado);
+
+  fetch(url)
+    .then(function(respuesta) {
+
+      return respuesta.text();
+
+    })
+    .then(function(datos) {
+
       document.getElementById("resultado").textContent =
-        "Código detectado: " + codigoEscaneado;
-    
-      const url =
-        URL_API +
-        "?codigo=" +
-        encodeURIComponent(codigoEscaneado);
-    
-      const imagen = document.createElement("img");
-    
-      imagen.src = url;
-    
-      imagen.style.display = "none";
-    
-      document.body.appendChild(imagen);
-    
-    },
+        "Respuesta: " + datos;
+
+    })
+    .catch(function(error) {
+
+      document.getElementById("resultado").textContent =
+        "❌ Error de conexión: " + error;
+
+    });
+
+},
       function(error) {
 
         // No mostramos los errores normales de lectura.
